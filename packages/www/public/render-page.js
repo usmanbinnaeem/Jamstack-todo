@@ -10197,10 +10197,16 @@ var _require = __webpack_require__(/*! theme-ui */ "../../node_modules/theme-ui/
 var _require2 = __webpack_require__(/*! @theme-ui/presets */ "../../node_modules/@theme-ui/presets/dist/index.esm.js"),
     light = _require2.light;
 
+var newTheme = Object.assign({}, light, {
+  sizes: {
+    container: 1024
+  }
+});
+
 module.exports = function (_ref) {
   var element = _ref.element;
   return /*#__PURE__*/React.createElement(ThemeProvider, {
-    theme: light
+    theme: newTheme
   }, element);
 };
 

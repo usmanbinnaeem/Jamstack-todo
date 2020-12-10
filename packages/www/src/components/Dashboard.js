@@ -1,13 +1,11 @@
-import React, { useContext, useReducer, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import {
   Flex,
   Container,
   NavLink,
-  Input,
   Button,
   Label,
   Checkbox,
-  Heading,
 } from "theme-ui";
 import { IdentityContext } from "../../netlifyIdentityContext";
 import { Link } from "gatsby";
@@ -40,23 +38,9 @@ const GET_TODOS = gql`
   }
 `;
 
-const todosReducer = (state, action) => {
-  switch (action.type) {
-    case "addTodo":
-      return [{ done: false, value: action.payload }, ...state];
-    case "toggleTodo":
-      const newState = [...state];
-      newState[action.payload] = {
-        done: !state[action.payload].done,
-        value: state[action.payload].done,
-      };
-      return newState;
-  }
-};
 
 export default () => {
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
-  const [todos, dispatch] = useReducer(todosReducer, []);
   const [addTodo] = useMutation(ADD_TODO);
   const [updateTodoDone] = useMutation(UPDATE_TODO_DONE);
   const { loading, error, data, refetch } = useQuery(GET_TODOS);

@@ -3,7 +3,7 @@ import {
   Flex,
   Container,
   NavLink,
-  Button,
+  Heading,
   Input,
   Label,
   Checkbox,
@@ -11,30 +11,18 @@ import {
 import { IdentityContext } from "../../netlifyIdentityContext";
 import { Link } from "gatsby";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
-// Graphql queries
-const ADD_TODO = gql`
-  mutation($text: String!) {
-    addTodo(text: $text) {
-      id
-    }
-  }
-`;
-const UPDATE_TODO_DONE = gql`
-  mutation UpdateTodoDone($id: ID!) {
-    updateTodoDone(id: $id) {
-      text
-      done
-    }
-  }
-`;
-const DELETE_TODO = gql`
-  mutation DeleteTodo($id: ID!) {
-    deleteTodo(id: $id) {
-      text
-    }
-  }
-`;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
 const GET_TODOS = gql`
   query GetTods {
     todos {
@@ -45,12 +33,39 @@ const GET_TODOS = gql`
   }
 `;
 
+const ADD_TODO = gql`
+  mutation($text: String!) {
+    addTodo(text: $text) {
+      id
+    }
+  }
+`;
+
+const UPDATE_TODO_DONE = gql`
+  mutation UpdateTodoDone($id: ID!) {
+    updateTodoDone(id: $id) {
+      text
+      done
+    }
+  }
+`;
+
+const DELETE_TODO = gql`
+  mutation DeleteTodo($id: ID!) {
+    deleteTodo(id: $id) {
+      text
+    }
+  }
+`;
+
+
 export default () => {
+  const classes = useStyles();
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
   const inputRef = useRef();
   const [addTodo] = useMutation(ADD_TODO);
-  const [deleteTodo] = useMutation(DELETE_TODO);
   const [updateTodoDone] = useMutation(UPDATE_TODO_DONE);
+  const [deleteTodo] = useMutation(DELETE_TODO);
   const { loading, error, data, refetch } = useQuery(GET_TODOS);
 
   return (
@@ -84,9 +99,11 @@ export default () => {
           </NavLink>
         )}
       </Flex>
+      <Flex style ={{padding: "5% 35%"}}>
+       <Heading as='h1'>Add Your Tasks</Heading>
+       </Flex>
       <Flex
-        pl={6}
-        pr={6}
+        style ={{padding: "3% 15%"}}
         as="form"
         onSubmit={async (e) => {
           e.preventDefault();
@@ -95,12 +112,12 @@ export default () => {
           inputRef.current.value = "";
         }}
       >
-        <Label sx={{ display: "flex", fontFamily: "system-ui" }}>
-          <span sx={{ marginLeft: 1, background: "#3E38F2" }}>Add todo</span>
+     
+        <Label sx={{ display: "flex"}}>
           <Input ref={inputRef} sx={{ marginLeft: 1 }} mr={2} />
         </Label>
 
-        <Button sx={{ marginLeft: 1, background: "#3E38F2" }}>Submit</Button>
+        <Button variant="contained" color="primary" className={classes.root}>Submit</Button>
       </Flex>
       <Flex sx={{ flexDirection: "column" }} pt={5}>
         {loading ? <div>Loading...</div> : null}
@@ -111,7 +128,7 @@ export default () => {
               <Flex
                 as="li"
                 p={2}
-                sx={{ fontSize: "22px", alignItems: "flex-end" }}
+                sx={{ alignItems: "flex-end" }}
                 key={todo.id}
                 onClick={async () => {
                   await updateTodoDone({ variables: { id: todo.id } });
@@ -124,15 +141,12 @@ export default () => {
                   sx={{ justifyContent: "space-between", width: "100%" }}
                 >
                   <span>{todo.text}</span>
-                  <Button
+                  <DeleteForeverIcon
                     onClick={async () => {
                       await deleteTodo({ variables: { id: todo.id } });
                       await refetch();
                     }}
-                  >
-                    {" "}
-                    deleteTodo
-                  </Button>
+                  />
                 </Flex>
               </Flex>
             ))}

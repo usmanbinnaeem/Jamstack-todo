@@ -27,16 +27,19 @@ const resolvers = {
   Query: {
     todos: async (parent, args, {user}) => {
       if(!user){
-        return [];
+        return []
       } else {  
         const results = await client.query(
           q.Paginate(q.Match(q.Index('todos-by-user'), user))
         );
-        return results.data.map(([ref, text, done]) => ({
-          id: ref.id,
+        return results.data.map(([ref, text, done]) => {
+          return {
+            id: ref.id,
           text,
           done
-        }));
+          }
+          
+        });
        
       }
      
@@ -55,14 +58,14 @@ const resolvers = {
             owner: user
           }
         })
-      );
+      )
     
       return {
         ...results.data,
         id: results.ref.id
       }
     },
-    updateTodoDone: async (_, { id }) => {
+    updateTodoDone: async (_, { id }, {user}) => {
       if(!user){
         throw new Error("Must be authenticated to insert todo");
       }
@@ -72,7 +75,7 @@ const resolvers = {
             done: !done
           }
         })
-      );
+      )
        return {
         ...results.data,
         id: results.ref.id
@@ -90,15 +93,15 @@ const server = new ApolloServer({
   } else {
     return {};
   }
-  };
+  }
 
   playground: true,
   introspection: true,
-});
+})
 
 exports.handler = server.createHandler({
   cors: {
-    origin: "*",
-    credentials: true,
-  },
-});
+      origin: "*",
+      credentials: true,
+  }
+})

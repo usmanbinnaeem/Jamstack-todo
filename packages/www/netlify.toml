@@ -1,4 +1,0 @@
-[build]
-    command="yarn run build && cd functions/graphql && yarn install"
-    functions="/functions"
-    publish="/public"

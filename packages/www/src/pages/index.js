@@ -1,22 +1,17 @@
-import React, {useState, useEffect} from "react";
-import { Container, Heading, Button, Flex } from "theme-ui";
-import netlifyIdentity from "netlify-identity-widget";
+import React,{useContext} from "react";
+import { Container, Heading, Flex } from "theme-ui";
+import NavBar from "../components/NavBar";
 
-export default props => {
 
-    useEffect(() => {
-        netlifyIdentity.init({});
-    });
-    
-    return (
+export default (props) => {
+
+  return (
     <Container>
-    <Flex sx = {{flexDirection: "column", padding: 3}}>
-        <Heading as = 'h1'>Jamstack Todo App</Heading>
-        <Button sx = {{marginTop: 2, color: 'black'}}
-        onClick = {() => {netlifyIdentity.open()}}
-        >
-        Login
-        </Button>
-    </Flex>
+      <NavBar/>
+      <Flex sx={{ flexDirection: "column", padding: 3 }}>
+        <Heading as="h1">Jamstack Todo App</Heading>
+        <Heading as="h3">first make sure you are login</Heading>
+      </Flex>
     </Container>
-)}
+  );
+};

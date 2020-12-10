@@ -1,0 +1,5 @@
+
+    const cmd = require("D:/PIAIC_BOOTCAMP/project-12c/Jamstack-todo/node_modules/gatsby/dist/commands/develop-process.js");
+    const args = {"_":["develop"],"verbose":false,"no-color":false,"no-colors":false,"noColors":false,"noColor":false,"json":false,"H":"localhost","host":"localhost","p":"8000","port":49996,"c":"","cert-file":"","certFile":"","k":"","key-file":"","keyFile":"","ca-file":"","caFile":"","graphql-tracing":false,"graphqlTracing":false,"$0":"gatsby","directory":"D:\\PIAIC_BOOTCAMP\\project-12c\\Jamstack-todo\\packages\\www","browserslist":[">0.25%","not dead"],"sitePackageJson":{"name":"www","version":"1.0.0","main":"index.js","license":"MIT","scripts":{"develop":"gatsby develop","build":"gatsby build","clean":"gatsby clean"},"dependencies":{"@theme-ui/presets":"^0.3.4","gatsby":"^2.28.0","gatsby-plugin-create-client-paths":"^2.6.0","netlify-identity-widget":"^1.9.1","react":"^17.0.1","react-dom":"^17.0.1","theme-ui":"^0.3.4"}},"report":{"errorMap":{}},"useYarn":false,"proxyPort":8000,"ssl":null,"debugInfo":null};
+    cmd(args);
+  

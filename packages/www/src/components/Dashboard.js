@@ -4,6 +4,7 @@ import {
   Container,
   NavLink,
   Heading,
+  Button,
   Input,
   Label,
   Checkbox,
@@ -12,16 +13,6 @@ import { IdentityContext } from "../../netlifyIdentityContext";
 import { Link } from "gatsby";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 
 const GET_TODOS = gql`
   query GetTods {
@@ -60,7 +51,6 @@ const DELETE_TODO = gql`
 
 
 export default () => {
-  const classes = useStyles();
   const { user, identity: netlifyIdentity } = useContext(IdentityContext);
   const inputRef = useRef();
   const [addTodo] = useMutation(ADD_TODO);
@@ -117,7 +107,7 @@ export default () => {
           <Input ref={inputRef} sx={{ marginLeft: 1 }} mr={2} />
         </Label>
 
-        <Button variant="contained" color="primary" className={classes.root}>Submit</Button>
+        <Button sx={{marginLeft:1,background:"#3E38F2"}}>Submit</Button>
       </Flex>
       <Flex sx={{ flexDirection: "column" }} pt={5}>
         {loading ? <div>Loading...</div> : null}

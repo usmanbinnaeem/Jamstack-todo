@@ -1,9 +1,10 @@
-const { ApolloServer, gql } = require("apollo-server-lambda");
-const faunadb = require('faunadb');
-const q = faunadb.query;
+const { ApolloServer, gql } = require("apollo-server-lambda")
+const faunadb = require('faunadb')
+const q = faunadb.query
 
+require('dotenv').config()
 
-var client = new faunadb.Client({secret: process.env.FAUNA_SERVER_SECRET});
+var client = new faunadb.Client({secret: process.env.FAUNA_SERVER_SECRET})
 
 const typeDefs = gql`
   type Query {
@@ -28,7 +29,7 @@ const resolvers = {
       if(!user){
         return [];
       } else {  
-        await client.query(
+        const results = await client.query(
           q.Paginate(q.Match(q.Index('todos-by-user'), user))
         );
         return results.data.map(([ref, text, done]) => ({

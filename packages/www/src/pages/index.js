@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React from "react";
 import { Container, Heading, Flex } from "theme-ui";
 import NavBar from "../components/NavBar";
 

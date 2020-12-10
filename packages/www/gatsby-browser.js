@@ -17,24 +17,24 @@ const authLink = setContext((_, {headers}) => {
   return {
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}` : ''
+      Authorization: token ? `Bearer ${token}`: ''
     }
   }
-});
+})
 
 const httpLink = new HttpLink({
-    uri: "https://jamstack-todoo-app.netlify.app/.netlify/functions/graphql",
+    uri: "https://jamstack-todoo-app.netlify.app/.netlify/functions/graphql"
   });
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(httpLink)
-});
+})
 
 exports.wrapRootElement = ({ element }) => {
   return (
     <ApolloProvider client={client}>
       {wrapRootElement({ element })}
     </ApolloProvider>
-  );
-};
+  )
+}
